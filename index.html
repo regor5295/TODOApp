@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To-Do App</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<script type="text/javascript" src="angular.min.js"></script>
+<body>
+	<div class="div1" ng-app="toDoApp" ng-Controller="myCtrl">
+	<div class="div2">
+		<h1 class="appTitle"><b>ToDo App</b></h1><hr>
+		<nav class="{{active}}" ng-click="$event.preventDefault()">
+
+			<!-- When a link in the menu is clicked, we set the active variable -->
+
+			<a href="index.html" class="sun" ng-click="active='sun'">Sun</a>
+			<a href="#" class="mon" ng-click="active='mon'">Mon</a>
+			<a href="#" class="tue" ng-click="active='tue'">Tue</a>
+			<a href="#" class="wed" ng-click="active='wed'">Wed</a>
+			<a href="#" class="thu" ng-click="active='thu'">Thu</a>
+			<a href="#" class="fri" ng-click="active='fri'">Fri</a>
+			<a href="#" class="sat" ng-click="active='sat'">Sat</a>
+		</nav>
+		<form ng-submit="todoAdd()">
+    	<input type="text" ng-model="todoInput" size="50" placeholder="Add task to list">
+    	<input type="submit" value="Done"><br>
+		</div>
+		<h3>Tasks List:</h3>
+    	<div ng-repeat="x in todoList">
+    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+	<p><button ng-click="remove()">Delete Task</button></p>
+	</div>
+	
+	<script>
+	var app = angular.module('toDoApp', []); 
+	app.controller('myCtrl', function($scope) {
+		$scope.todoList = [];
+
+		$scope.todoAdd = function() {
+			$scope.todoList.push({todoText:$scope.todoInput, done:false});
+			$scope.todoInput = "";
+		};
+
+		$scope.remove = function() {
+			var oldList = $scope.todoList;
+			$scope.todoList = [];
+			angular.forEach(oldList, function(x) {
+				if (!x.done) $scope.todoList.push(x);
+			});
+		};
+	});
+	</script>
+</div>
+</form>
+
+<br>
+	</div>
+</body>
+</html>
